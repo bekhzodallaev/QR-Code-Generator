@@ -1,0 +1,46 @@
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#qrForm {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.url_input {
+  padding: 0.5rem;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+.qrcode_container {
+  width: 300px;
+  height: 300px;
+  border: 2px solid rgba(0, 0, 0, 0.445);
+  border-radius: 10px;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#download_btn {
+  margin-top: 1rem;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background-color: rgb(20, 119, 119);
+  cursor: pointer;
+  padding: 0.5rem;
+  align-items: center;
+}
+.qrcode_generate_btn {
+  width: max-content;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background-color: rgb(30, 114, 30);
+}

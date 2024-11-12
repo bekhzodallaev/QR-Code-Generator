@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>QR Code Generator</h1>
+    <form id="qrForm">
+      <div class="parent_input">
+        <label for="input">Paste URL or Text</label>
+        <input type="text" id="input" class="url_input" required />
+      </div>
+      <div class="color_input">
+        <label for="color">Change Color</label>
+        <input type="color" id="color" class="qrcode_color" />
+      </div>
+      <button type="button" id="generateBtn" class="qrcode_generate_btn">
+        Generate QR Code
+      </button>
+    </form>
+    <div class="qrcode_container" id="qrcodeContainer"></div>
+    <button id="download_btn" style="display: none">Download</button>
+
+    <script>
+      document
+        .getElementById('generateBtn')
+        .addEventListener('click', async () => {
+          const url = document.getElementById('input').value;
+          const color = document.getElementById('color').value;
+
+          if (!url) {
+            alert('Please enter a URL or text to generate the QR code');
+            return;
+          }
+
+          try {
+            const response = await fetch('/generate', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ url, color }),
+            });
+
+            const data = await response.json();
+            if (data.qrCodeImage) {
+              document.getElementById(
+                'qrcodeContainer'
+              ).innerHTML = `<img src="${data.qrCodeImage}" alt="QR Code">`;
+              document.getElementById('download_btn').style.display = 'block';
+              document.getElementById('download_btn').onclick = () =>
+                downloadQRCode(data.qrCodeImage);
+            }
+          } catch (error) {
+            console.error('Error generating QR Code:', error);
+          }
+        });
+
+      function downloadQRCode(dataUrl) {
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = 'qrcode.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+    </script>
+  </body>
+</html>
